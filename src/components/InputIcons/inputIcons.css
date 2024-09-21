@@ -1,0 +1,32 @@
+.input-container {
+  padding: 10px;
+  background-color: #fff;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+}
+
+.custom-tooltip .ant-tooltip-arrow {
+  border-color: green !important;
+}
+
+.custom-tooltip .ant-tooltip-inner {
+  background-color: green !important;
+  border: none !important;
+}
+
+.tooltip-section {
+  display: "flex";
+  background-color: "green";
+  padding: "8px";
+  border-radius: "4px";
+}
+
+.tooltip-icons {
+  color: "white";
+  margin-right: 12px;
+}
+
+.test {
+  background-color: red;
+}

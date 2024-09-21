@@ -1,0 +1,94 @@
+/* TripCard.css */
+.trip-card {
+  background-color: #f7f7f7;
+  padding: 16px;
+  border-radius: 8px;
+  font-family: "Arial", sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header .icon {
+  font-size: 22px;
+  color: #333; /* Color for the back arrow */
+  cursor: pointer;
+  margin-right: 12px; /* Space between the arrow and title */
+}
+
+.header .title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333; /* Color of the title */
+  flex-grow: 1; /* Ensures title takes up available space */
+  text-align: center; /* Centers the title */
+}
+
+.header .right {
+  font-size: 20px;
+  color: #333; /* Color of the edit icon */
+  cursor: pointer;
+  position: absolute; /* Keeps icon to the right */
+  right: 0; /* Align the edit icon to the right */
+}
+.trip-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trip-details {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+.trip-details p {
+  margin: 0;
+  font-size: 20px;
+  color: #666;
+}
+
+.trip-details strong {
+  color: #333;
+}
+
+.menu-icon {
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+}
+
+.custom-menu {
+  border-radius: 8px;
+  padding: 8px 0;
+  background-color: white;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.custom-menu .ant-menu-item {
+  padding: 8px 20px;
+  font-size: 14px;
+  color: #333;
+}
+
+.custom-menu .ant-menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.custom-menu .ant-menu-item .anticon {
+  margin-right: 12px;
+  color: #333;
+}
+
+.trip-date {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #aaa;
+}
