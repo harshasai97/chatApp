@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import { List, Spin } from "antd";
+import { Spin } from "antd";
 import InputWithIcons from "../InputIcons/inputIcons.tsx";
 import { TripHeading } from "../TripHeading/index.ts";
 import "./chatScreen.css";
-
+import { CheckCircleFilled } from "@ant-design/icons";
 interface Sender {
   image: string;
   is_kyc_verified: boolean;
@@ -71,16 +71,25 @@ const ChatComponent: React.FC = () => {
     }
   }, [page]);
 
+  //To format time
+  function formatTime(dateTimeString) {
+    const date = new Date(dateTimeString);
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12 || 12;
+
+    const formattedMinutes = minutes < 10 ? "0" + minutes : minutes;
+
+    return `${hours}:${formattedMinutes} ${ampm}`;
+  }
+
   return (
     <div className="chat-screen">
       <TripHeading tripFrom={tripFrom} tripTo={tripTo} />
       <div
+        className="chat-container"
         ref={chatContainerRef}
-        style={{
-          overflowY: "auto",
-          padding: "10px",
-          background: "#fff",
-        }}
         onScroll={handleScroll}
       >
         {loading ? (
@@ -95,18 +104,18 @@ const ChatComponent: React.FC = () => {
                 }
               >
                 {!chat.sender.self && (
-                  <img src={chat.sender.image} alt="Sender" />
+                  <div className="sender-image-content">
+                    <img src={chat.sender.image} alt="Sender" />
+                    {chat.sender.is_kyc_verified && (
+                      <CheckCircleFilled className="sender-image-verified" />
+                    )}
+                  </div>
                 )}
                 <div>
-                  <p style={{ margin: "0", fontWeight: "bold" }}>
-                    {chat.sender.self ? "You" : "Sender"}
-                  </p>
-                  <p className="message-content">
+                  <div className="message-content">
                     {chat.message}
-                    <div className="message-time">
-                      {new Date(chat.time).toLocaleTimeString()}
-                    </div>
-                  </p>
+                    <div className="message-time">{formatTime(chat.time)}</div>
+                  </div>
                 </div>
               </div>
             ))}

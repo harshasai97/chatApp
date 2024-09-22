@@ -1,32 +1,47 @@
 .input-container {
-  padding: 10px;
-  background-color: #fff;
+  padding: 8px 16px 32px 16px;
   position: sticky;
   bottom: 0;
   z-index: 10;
 }
 
-.custom-tooltip .ant-tooltip-arrow {
-  border-color: green !important;
+.input-container .ant-input-affix-wrapper {
+  height: 42px !important;
+}
+
+.input-container .ant-input-outlined:focus {
+  border: none;
+  box-shadow: none;
+}
+
+.input-container .ant-input-affix-wrapper .ant-input-suffix {
+  display: flex;
+  gap: 8px;
+}
+.custom-tooltip .ant-tooltip-arrow::before {
+  background: #377e21 !important;
 }
 
 .custom-tooltip .ant-tooltip-inner {
-  background-color: green !important;
+  background-color: #377e21 !important;
   border: none !important;
+  border-radius: 250px;
 }
 
 .tooltip-section {
-  display: "flex";
-  background-color: "green";
-  padding: "8px";
-  border-radius: "4px";
+  display: flex;
+  background-color: #377e21;
+  padding: 8px;
+  border-radius: 4px;
+  gap: 16px;
 }
 
 .tooltip-icons {
-  color: "white";
-  margin-right: 12px;
+  color: white;
+  font-size: 20px;
 }
 
-.test {
-  background-color: red;
+.iconSize {
+  font-size: 20px;
+  cursor: pointer;
 }

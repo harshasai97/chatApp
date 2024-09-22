@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import { ChatScreen } from "./components/ChatScreen/index.ts";
 
 function App() {
