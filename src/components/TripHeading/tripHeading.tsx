@@ -1,5 +1,5 @@
-import React from "react";
-import { Menu, Dropdown, Avatar, Tooltip } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import { Menu, Dropdown, Avatar, Tooltip, Input } from "antd";
 import {
   ArrowLeftOutlined,
   EditOutlined,
@@ -16,6 +16,33 @@ interface TripHeaderProps {
 }
 
 const TripHeading: React.FC<TripHeaderProps> = ({ tripFrom, tripTo }) => {
+  const [tripName, setTripName] = useState("Trip 1");
+  const [shouldEdit, setShouldEdit] = useState(false);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const onEditName = () => {
+    setShouldEdit(true);
+  };
+
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target as Node)) {
+      setShouldEdit(false);
+    }
+  };
+
+  const handleFocus = () => {
+    if (shouldEdit && inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const menu = (
     <Menu className="custom-menu">
       <Menu.Item key="1" icon={<UserOutlined className="iconSize" />}>
@@ -31,14 +58,25 @@ const TripHeading: React.FC<TripHeaderProps> = ({ tripFrom, tripTo }) => {
   );
 
   return (
-    <div className="trip-card">
+    <div className="trip-card" onClick={handleFocus}>
       <div className="header">
         <div className="title">
           <ArrowLeftOutlined className="icon" />
-          Trip 1
+          <Input
+            className="custom-input"
+            value={tripName}
+            ref={(input) => {
+              // Store the underlying input element
+              inputRef.current = input?.input; // Access the input element directly
+            }}
+            onChange={(e) => setTripName(e.target.value)}
+            disabled={!shouldEdit}
+          />
         </div>
         <div>
-          <EditOutlined className="right" />
+          <div onClick={onEditName}>
+            <EditOutlined className="right" />
+          </div>
         </div>
       </div>
 
