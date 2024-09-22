@@ -80,3 +80,21 @@
   background-color: #fff;
   border-radius: 50%;
 }
+
+.copy-menu {
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+.copyIcons {
+  font-size: 16px;
+}
+
+.copy-menu button {
+  background-color: #fff;
+  color: black;
+  border: none;
+  cursor: pointer;
+}

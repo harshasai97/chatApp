@@ -4,7 +4,12 @@ import { Spin } from "antd";
 import InputWithIcons from "../InputIcons/inputIcons.tsx";
 import { TripHeading } from "../TripHeading/index.ts";
 import "./chatScreen.css";
-import { CheckCircleFilled } from "@ant-design/icons";
+import {
+  CheckCircleFilled,
+  CopyOutlined,
+  CloseCircleOutlined,
+} from "@ant-design/icons";
+import useLongPress from "../customHooks/longPress.tsx";
 interface Sender {
   image: string;
   is_kyc_verified: boolean;
@@ -25,7 +30,34 @@ const ChatComponent: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [tripFrom, setTripfrom] = useState("");
   const [tripTo, setTripTo] = useState("");
+  const [selected, setSelected] = useState(false);
+  const [showCopyMenu, setShowCopyMenu] = useState("");
+  const textToCopy = "This is the text to copy!";
   const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const handleLongPress = (current: string) => {
+    setShowCopyMenu(current);
+    console.log("Long press detected!", current);
+  };
+
+  const handleCopy = (chatMsg, chat) => {
+    console.log(chat);
+    navigator.clipboard
+      .writeText(chatMsg)
+      .then(() => {
+        alert("Text copied to clipboard!");
+      })
+      .catch((err) => {
+        console.error("Failed to copy: ", err);
+      });
+    setShowCopyMenu(false);
+  };
+
+  const handleCancel = () => {
+    setShowCopyMenu(false);
+  };
+
+  const longPressEvents = useLongPress(handleLongPress, 500);
 
   // Fetch chat data from API
   const fetchChatData = async (page: number) => {
@@ -85,7 +117,7 @@ const ChatComponent: React.FC = () => {
   }
 
   return (
-    <div className="chat-screen">
+    <div className="chat-screen" {...longPressEvents}>
       <TripHeading tripFrom={tripFrom} tripTo={tripTo} />
       <div
         className="chat-container"
@@ -98,6 +130,9 @@ const ChatComponent: React.FC = () => {
           <div className="chat-content">
             {chatData.map((chat) => (
               <div
+                {...longPressEvents}
+                onMouseDown={() => longPressEvents.onMouseDown(chat.id)}
+                onTouchStart={() => longPressEvents.onTouchStart(chat.id)}
                 key={chat.id}
                 className={
                   chat.sender.self ? "chat-message self" : "chat-message"
@@ -114,6 +149,16 @@ const ChatComponent: React.FC = () => {
                 <div>
                   <div className="message-content">
                     {chat.message}
+                    {showCopyMenu === chat.id && (
+                      <div className="copy-menu">
+                        <button onClick={() => handleCopy(chat.message, chat)}>
+                          <CopyOutlined className="copyIcons" />
+                        </button>
+                        <button className="cancel" onClick={handleCancel}>
+                          <CloseCircleOutlined className="copyIcons" />
+                        </button>
+                      </div>
+                    )}
                     <div className="message-time">{formatTime(chat.time)}</div>
                   </div>
                 </div>
