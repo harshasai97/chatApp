@@ -7,7 +7,6 @@ import {
   UserOutlined,
   PhoneOutlined,
   WarningOutlined,
-  AntDesignOutlined,
 } from "@ant-design/icons";
 import "./tripHeading.css";
 
